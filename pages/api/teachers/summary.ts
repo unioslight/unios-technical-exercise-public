@@ -11,6 +11,9 @@ const handler: NextApiHandler = async (req, res) => {
     return await requestHandler(req, res);
 };
 
+/*
+* TODOS: the business logic of the summary should in teacher service; the controller is just for validating, formating the input and then pass args into the service 
+*/
 const getHandler: NextApiHandler = async (req, res) => {
 
     const prismaSql = Prisma.sql`
