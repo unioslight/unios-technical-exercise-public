@@ -4,6 +4,10 @@ interface ILessonService{
      create({teacherId, roomId, name, day, hour}: {teacherId: number, roomId: number, name: string, day: number, hour: number}): Promise<number>;
 }
 
+/*
+* TODOS: unit test
+* implement IoC for easier unit test
+*/
 export default class LessonService extends BaseService implements ILessonService{
      
      constructor(){
@@ -22,15 +26,7 @@ export default class LessonService extends BaseService implements ILessonService
               session = await this._prisma.session.create({ data: creatingSession })
               this._debug('createdSession = ', session);
           }
-  
-  
-          const result = await this._prisma.$queryRaw(
-               this._Prisma.sql`SELECT * FROM "Lesson" WHERE "teacherId" = ${teacherId}`            
-          )
-          this._debug('result = ', result);
-  
-  
-  
+    
           const foundTeacherLesson = await this._prisma.lesson.findFirst({ where: { teacherId, sessionId: session.id}});
           const foundRoomLesson = await this._prisma.lesson.findFirst({ where: { roomId, sessionId: session.id}});
   
